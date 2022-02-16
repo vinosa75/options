@@ -160,18 +160,19 @@ def load_charts(request):
 
     if EntryPrice == low:
         # Consistent
-        co_result = (math.ceil((Open+1)/50))*50
-        # Taking the 3rd strike below entry price
-        co_strike = co_result+150
+        co_result = int(math.ceil(low / 50.0)) * 50
+        # Taking the 3rd strike above entry price
+        co_strike = co_result+100
         co_high =0 
         co_low=0
 
         # Assumption
-        dummy = (math.ceil((EntryPrice+1)/50))*50
-        as_entry = (dummy + 100) - 5
-        as_result = (math.ceil((as_entry+1)/50))*50
+        dummy = int(math.ceil(EntryPrice / 50.0)) * 50
+        as_entry = (dummy + 50) - 5
+
+        as_result = int(math.floor(as_entry / 50.0)) * 50
         # Taking the 3rd strike below entry price
-        as_strike = (as_result-100)
+        as_strike = (as_result-50)
         as_high =0 
         as_low=0
         co_symbol = "CALL"
@@ -181,18 +182,18 @@ def load_charts(request):
         as_strike = str(as_strike) + "PE"
     else:
         # Consistent
-        co_result = (math.ceil((Open+1)/50))*50
-        # Taking the 3rd strike below entry price
-        co_strike = co_result-150
+        co_result = int(math.ceil(High / 50.0)) * 50
+        # Taking the 3rd strike above entry price
+        co_strike = co_result-100
         co_high =0 
         co_low=0
 
         # Assumption
-        dummy = (math.ceil((EntryPrice+1)/50))*50
-        as_entry = (dummy - 100) + 5
-        as_result = (math.ceil((as_entry+1)/50))*50
+        dummy = int(math.floor(EntryPrice / 50.0)) * 50
+        as_entry = (dummy - 50) + 5
+        as_result = int(math.floor(as_entry / 50.0)) * 50
         # Taking the 3rd strike below entry price
-        as_strike = (as_result+100)
+        as_strike = (as_result+50)
         as_high =0 
         as_low=0
         co_symbol = "PUT"
