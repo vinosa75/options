@@ -162,6 +162,27 @@ def load_charts(request):
         # Consistent
         co_result = (math.ceil((Open+1)/50))*50
         # Taking the 3rd strike below entry price
+        co_strike = co_result+150
+        co_high =0 
+        co_low=0
+
+        # Assumption
+        dummy = (math.ceil((EntryPrice+1)/50))*50
+        as_entry = (dummy + 100) - 5
+        as_result = (math.ceil((as_entry+1)/50))*50
+        # Taking the 3rd strike below entry price
+        as_strike = (as_result-100)
+        as_high =0 
+        as_low=0
+        co_symbol = "CALL"
+        as_symbol = "PUT"
+
+        co_strike = str(co_strike) + "CE"
+        as_strike = str(as_strike) + "PE"
+    else:
+        # Consistent
+        co_result = (math.ceil((Open+1)/50))*50
+        # Taking the 3rd strike below entry price
         co_strike = co_result-150
         co_high =0 
         co_low=0
@@ -174,37 +195,22 @@ def load_charts(request):
         as_strike = (as_result+100)
         as_high =0 
         as_low=0
+        co_symbol = "PUT"
+        as_symbol = "CALL"
 
         co_strike = str(co_strike) + "PE"
         as_strike = str(as_strike) + "CE"
-    else:
-                # Consistent
-        co_result = (math.ceil((Open+1)/50))*50
-        # Taking the 3rd strike below entry price
-        co_strike = co_result+150
-        co_high =0 
-        co_low=0
-
-        # Assumption
-        dummy = (math.ceil((EntryPrice+1)/50))*50
-        as_entry = (dummy - 100) - 5
-        as_result = (math.ceil((as_entry+1)/50))*50
-        # Taking the 3rd strike below entry price
-        as_strike = (as_result-100)
-        as_high =0 
-        as_low=0
-
-        co_strike = str(co_strike) + "CE"
-        as_strike = str(as_strike) + "PE"
 
     response = render(request, 'hello_world.html', 
     
     {'lst': lst,
-    'EntryPrice':EntryPrice,
+    'EntryPrice':int(EntryPrice),
     'StrikePrice':StrikePrice,
      'co_strike':co_strike,
      'as_strike':as_strike,
-     'as_entry':as_entry} )
+     'as_entry':as_entry,
+     'co_symbol':co_symbol,
+     'as_symbol':as_symbol} )
 
     return response
 
