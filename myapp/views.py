@@ -182,7 +182,7 @@ def load_charts(request):
         as_strike = str(as_strike) + "PE"
     else:
         # Consistent
-        co_result = int(math.ceil(High / 50.0)) * 50
+        co_result = int(math.floor(High / 50.0)) * 50
         # Taking the 3rd strike above entry price
         co_strike = co_result-100
         co_high =0 
@@ -191,7 +191,7 @@ def load_charts(request):
         # Assumption
         dummy = int(math.floor(EntryPrice / 50.0)) * 50
         as_entry = (dummy - 50) + 5
-        as_result = int(math.floor(as_entry / 50.0)) * 50
+        as_result = int(math.ceil(as_entry / 50.0)) * 50
         # Taking the 3rd strike below entry price
         as_strike = (as_result+50)
         as_high =0 
