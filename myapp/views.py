@@ -46,6 +46,29 @@ def logout(request):
 
     return redirect('login')
 
+def newForm(request):
+    print(request.POST)
+    return render(request,'formula.html')
+    # if 'form1' in request.POST['form']:
+        # if "monday" in request.POST['title']:
+        #     return render(request,'in_the_money.html')
+        # elif "tuesday" in request.POST['title']:
+        #     return render(request,'in_the_money_put.html')
+        # elif "wednesday" in request.POST['title']:
+        #     return render(request,'in_the_money_put.html')
+        # elif "thursday" in request.POST['title']:
+        #     return render(request,'in_the_money_put.html')
+        # elif "friday" in request.POST['title']:
+        #     return render(request,'in_the_money_put.html')
+        # else:
+        #     return render(request,'nodata.html')
+
+
+def formulaform1(request):
+
+    print(request.POST['section'])
+
+    return render(request, 'hello_world.html')
 
 @csrf_protect
 # @login_required(login_url='login')
@@ -70,27 +93,49 @@ def load_charts(request):
 
     # response.set_cookie('logged_in_status', 'never_use_this_ever') 
     print("Manoj")
+    print(request.POST['section'])
     print(request.POST)
-
+    
     High = float(request.POST['High'])
     Open = float(request.POST['Open']) 
     low = float(request.POST['Low'])
+    day = request.POST['section']
 
 
-    
-    if (High-Open)/50 > (Open-low)/50:
-        print(f"{low} is the entry price")
-        EntryPrice = float(low)
-
-        result = (math.ceil((Open+1)/50))*50
-        StrikePrice = result+50
-      
-    else:
+    sample = int(math.floor(Open / 50.0)) * 50
+    print(sample)
+    if low < sample:
         print(f"{High} is the entry price")
         EntryPrice = float(High)
 
         result = (math.floor((Open-1)/50))*50
         StrikePrice = result-50
+    else:
+        print(f"{low} is the entry price")
+        EntryPrice = float(low)
+
+        result = (math.ceil((Open+1)/50))*50
+        StrikePrice = result+50
+
+
+
+
+
+
+
+    # if (High-Open)/50 > (Open-low)/50:
+    #     print(f"{low} is the entry price")
+    #     EntryPrice = float(low)
+
+    #     result = (math.ceil((Open+1)/50))*50
+    #     StrikePrice = result+50
+      
+    # else:
+    #     print(f"{High} is the entry price")
+    #     EntryPrice = float(High)
+
+    #     result = (math.floor((Open-1)/50))*50
+    #     StrikePrice = result-50
 
     # EntryPrice = float(request.POST['entry'])
     # StrikePrice = float(request.POST['strike'])
@@ -158,50 +203,228 @@ def load_charts(request):
 
 
 
-    if EntryPrice == low:
-        # Consistent
-        co_result = int(math.ceil(low / 50.0)) * 50
-        # Taking the 3rd strike above entry price
-        co_strike = co_result+100
-        co_high =0 
-        co_low=0
+    if day == "monday":
+        if EntryPrice == low:
+            # Consistent
+            co_result = int(math.ceil(low / 50.0)) * 50
+            # Taking the 3rd strike above entry price
+            co_strike = co_result+100
+            co_high =0 
+            co_low=0
 
-        # Assumption
-        dummy = int(math.ceil(EntryPrice / 50.0)) * 50
-        as_entry = (dummy + 50) - 5
+            # Assumption
+            dummy = int(math.ceil(EntryPrice / 50.0)) * 50
+            as_entry = (dummy + 50) - 5
 
-        as_result = int(math.floor(as_entry / 50.0)) * 50
-        # Taking the 3rd strike below entry price
-        as_strike = (as_result-50)
-        as_high =0 
-        as_low=0
-        co_symbol = "CALL"
-        as_symbol = "PUT"
+            as_result = int(math.floor(as_entry / 50.0)) * 50
+            # Taking the 3rd strike below entry price
+            as_strike = (as_result-50)
+            as_high =0 
+            as_low=0
+            co_symbol = "CALL"
+            as_symbol = "PUT"
 
-        co_strike = str(co_strike) + "CE"
-        as_strike = str(as_strike) + "PE"
-    else:
-        # Consistent
-        co_result = int(math.floor(High / 50.0)) * 50
-        # Taking the 3rd strike above entry price
-        co_strike = co_result-100
-        co_high =0 
-        co_low=0
+            co_strike = str(co_strike) + "CE"
+            as_strike = str(as_strike) + "PE"
+        else:
+            # Consistent
+            co_result = int(math.floor(High / 50.0)) * 50
+            # Taking the 3rd strike above entry price
+            co_strike = co_result-100
+            co_high =0 
+            co_low=0
 
-        # Assumption
-        dummy = int(math.floor(EntryPrice / 50.0)) * 50
-        as_entry = (dummy - 50) + 5
-        as_result = int(math.ceil(as_entry / 50.0)) * 50
-        # Taking the 3rd strike below entry price
-        as_strike = (as_result+50)
-        as_high =0 
-        as_low=0
-        co_symbol = "PUT"
-        as_symbol = "CALL"
+            # Assumption
+            dummy = int(math.floor(EntryPrice / 50.0)) * 50
+            as_entry = (dummy - 50) + 5
+            as_result = int(math.ceil(as_entry / 50.0)) * 50
+            # Taking the 3rd strike below entry price
+            as_strike = (as_result+50)
+            as_high =0 
+            as_low=0
+            co_symbol = "PUT"
+            as_symbol = "CALL"
 
-        co_strike = str(co_strike) + "PE"
-        as_strike = str(as_strike) + "CE"
+            co_strike = str(co_strike) + "PE"
+            as_strike = str(as_strike) + "CE"
 
+    elif day == "tuesday":
+        if EntryPrice == low:
+            # Consistent
+            co_result = int(math.ceil(low / 50.0)) * 50
+            # Taking the 3rd strike above entry price
+            co_strike = co_result+100
+            co_high =0 
+            co_low=0
+
+            # Assumption
+            dummy = int(math.ceil(EntryPrice / 50.0)) * 50
+            as_entry = (dummy + 50) + 10
+
+            as_result = int(math.floor(as_entry / 50.0)) * 50
+            # Taking the 3rd strike below entry price
+            as_strike = (as_result-100)
+            as_high =0 
+            as_low=0
+            co_symbol = "CALL"
+            as_symbol = "PUT"
+
+            co_strike = str(co_strike) + "CE"
+            as_strike = str(as_strike) + "PE"
+        else:
+            # Consistent
+            co_result = int(math.floor(High / 50.0)) * 50
+            # Taking the 3rd strike above entry price
+            co_strike = co_result-100
+            co_high =0 
+            co_low=0
+
+            # Assumption
+            dummy = int(math.floor(EntryPrice / 50.0)) * 50
+            as_entry = (dummy - 50) - 10
+            as_result = int(math.ceil(as_entry / 50.0)) * 50
+            # Taking the 3rd strike below entry price
+            as_strike = (as_result+100)
+            as_high =0 
+            as_low=0
+            co_symbol = "PUT"
+            as_symbol = "CALL"
+
+            co_strike = str(co_strike) + "PE"
+            as_strike = str(as_strike) + "CE"
+    elif day == "wednesday":
+        if EntryPrice == low:
+            # Consistent
+            co_result = int(math.ceil(low / 50.0)) * 50
+            # Taking the 3rd strike above entry price
+            co_strike = co_result+50
+            co_high =0 
+            co_low=0
+
+            # Assumption
+            dummy = int(math.ceil(EntryPrice / 50.0)) * 50
+            as_entry = (dummy + 50) - 10
+
+            as_result = int(math.floor(as_entry / 50.0)) * 50
+            # Taking the 3rd strike below entry price
+            as_strike = (as_result-50)
+            as_high =0 
+            as_low=0
+            co_symbol = "CALL"
+            as_symbol = "PUT"
+
+            co_strike = str(co_strike) + "CE"
+            as_strike = str(as_strike) + "PE"
+        else:
+            # Consistent
+            co_result = int(math.floor(High / 50.0)) * 50
+            # Taking the 3rd strike above entry price
+            co_strike = co_result-50
+            co_high =0 
+            co_low=0
+
+            # Assumption
+            dummy = int(math.floor(EntryPrice / 50.0)) * 50
+            as_entry = (dummy - 50) + 10
+            as_result = int(math.ceil(as_entry / 50.0)) * 50
+            # Taking the 3rd strike below entry price
+            as_strike = (as_result+50)
+            as_high =0 
+            as_low=0
+            co_symbol = "PUT"
+            as_symbol = "CALL"
+
+            co_strike = str(co_strike) + "PE"
+            as_strike = str(as_strike) + "CE"
+    elif day == "thursday":
+        if EntryPrice == low:
+            # Consistent
+            co_result = int(math.ceil(low / 50.0)) * 50
+            # Taking the 3rd strike above entry price
+            co_strike = co_result+50
+            co_high =0 
+            co_low=0
+
+            # Assumption
+            dummy = int(math.ceil(EntryPrice / 50.0)) * 50
+            as_entry = (dummy + 50) - 15
+
+            as_result = int(math.floor(as_entry / 50.0)) * 50
+            # Taking the 3rd strike below entry price
+            as_strike = (as_result-0)
+            as_high =0 
+            as_low=0
+            co_symbol = "CALL"
+            as_symbol = "PUT"
+
+            co_strike = str(co_strike) + "CE"
+            as_strike = str(as_strike) + "PE"
+        else:
+            # Consistent
+            co_result = int(math.floor(High / 50.0)) * 50
+            # Taking the 3rd strike above entry price
+            co_strike = co_result-50
+            co_high =0 
+            co_low=0
+
+            # Assumption
+            dummy = int(math.floor(EntryPrice / 50.0)) * 50
+            as_entry = (dummy - 50) + 15
+            as_result = int(math.ceil(as_entry / 50.0)) * 50
+            # Taking the 3rd strike below entry price
+            as_strike = (as_result+0)
+            as_high =0 
+            as_low=0
+            co_symbol = "PUT"
+            as_symbol = "CALL"
+
+            co_strike = str(co_strike) + "PE"
+            as_strike = str(as_strike) + "CE"
+    elif day == "friday":
+        if EntryPrice == low:
+            # Consistent
+            co_result = int(math.ceil(low / 50.0)) * 50
+            # Taking the 3rd strike above entry price
+            co_strike = co_result+100
+            co_high =0 
+            co_low=0
+
+            # Assumption
+            dummy = int(math.ceil(EntryPrice / 50.0)) * 50
+            as_entry = (dummy + 50) + 6
+
+            as_result = int(math.floor(as_entry / 50.0)) * 50
+            # Taking the 3rd strike below entry price
+            as_strike = (as_result-100)
+            as_high =0 
+            as_low=0
+            co_symbol = "CALL"
+            as_symbol = "PUT"
+
+            co_strike = str(co_strike) + "CE"
+            as_strike = str(as_strike) + "PE"
+        else:
+            # Consistent
+            co_result = int(math.floor(High / 50.0)) * 50
+            # Taking the 3rd strike above entry price
+            co_strike = co_result-100
+            co_high =0 
+            co_low=0
+
+            # Assumption
+            dummy = int(math.floor(EntryPrice / 50.0)) * 50
+            as_entry = (dummy - 50) - 6 
+            as_result = int(math.ceil(as_entry / 50.0)) * 50
+            # Taking the 3rd strike below entry price
+            as_strike = (as_result+100)
+            as_high =0 
+            as_low=0
+            co_symbol = "PUT"
+            as_symbol = "CALL"
+
+            co_strike = str(co_strike) + "PE"
+            as_strike = str(as_strike) + "CE"
+        
     response = render(request, 'hello_world.html', 
     
     {'lst': lst,
@@ -211,7 +434,8 @@ def load_charts(request):
      'as_strike':as_strike,
      'as_entry':as_entry,
      'co_symbol':co_symbol,
-     'as_symbol':as_symbol} )
+     'as_symbol':as_symbol,
+     'day':day} )
 
     return response
 

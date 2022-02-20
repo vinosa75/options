@@ -23,5 +23,7 @@ urlpatterns = [
     path('',views.entry,name="entry"),
     path('ajax-load/', views.load_charts, name='ajax_load'),
     path("login", views.login, name="login"),
-    path("logout", views.logout, name="logout"),
+    path("logout", views.logout, name="logout"),    
+    path('ajaxnewform/',views.newForm,name='newForm'),
+    path('ajaxformulaform1/',views.formulaform1,name='formulaform1'),
 ]

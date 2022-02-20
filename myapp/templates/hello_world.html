@@ -308,65 +308,72 @@
       </div>
       </div>
     </div> -->
-
+    <div class="row mb-2" style="text-align:center;margin-left: 20px;">
+      <h2 style="margin-left: 22%;"> <span class="badge" style="color:white;background-color:#5B7065">{{day | capfirst}}</span> </h2>
+      <!-- <h3 class="mb-0" style="color: black;margin-left: 24%;"></h3> -->
+    </div>
+    
     <div class="row mb-2" style="text-align:center">
-      <div class="col-md-5" style="margin-left: 20px;">
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-          <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary">NIFTY</strong>
-            <h3 class="mb-0" style="color: white;">Consistent ({{co_symbol}})</h3>
-            <!-- <div class="mb-1 text-muted">Nov 12</div> -->
-            <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Entry
-                <span class="badge badge-primary badge-pill" style="font-size: large;">{{EntryPrice}}</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Strike
-                <span class="badge badge-primary badge-pill" style="font-size: large;">{{co_strike}}</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                High
-                <span class="badge badge-primary badge-pill" style="font-size: large;">1</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Low
-                <span class="badge badge-primary badge-pill" style="font-size: large;">1</span>
-              </li>
-            </ul>
-          </div>
 
-        </div>
+      <div class="col-md-3" style="margin-left: 20px;">
+        <!-- <strong class="d-inline-block mb-2 text-primary">NIFTY</strong> -->
+        <h3 class="mb-0" style="color: black;">Consistent</h3>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Entry
+          <span class="badge badge-primary badge-pill" style="font-size: large;">{{EntryPrice}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Strike
+          {% if 'CE' in co_strike %}
+          <span class="badge badge-success badge-pill" style="font-size: large;">{{co_strike}}</span>
+            {% else %}
+          <span class="badge badge-danger badge-pill" style="font-size: large;">{{co_strike}}</span>
+            {% endif %}
+
+          <!-- <span class="badge badge-success badge-pill" style="font-size: large;">{{co_strike}}</span> -->
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          High
+          <span class="badge badge-primary badge-pill" style="font-size: large;">1</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Low
+          <span class="badge badge-primary badge-pill" style="font-size: large;">1</span>
+        </li>
+      </ul>
       </div>
-      <div class="col-md-5" style="margin-left: 20px;">
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-          <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-success">NIFTY</strong>
-            <h3 class="mb-0" style="color: white;">Assumption ({{as_symbol}})</h3>
-            <!-- <div class="mb-1 text-muted">Nov 11</div> -->
-            <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Entry
-                <span class="badge badge-primary badge-pill" style="font-size: large;" >{{as_entry}}</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Strike
-                <span class="badge badge-primary badge-pill" style="font-size: large;">{{as_strike}}</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                High
-                <span class="badge badge-primary badge-pill" style="font-size: large;" >1</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Low
-                <span class="badge badge-primary badge-pill" style="font-size: large;">1</span>
-              </li>
-            </ul>
 
-          </div>
 
-        </div>
+      
+      <div class="col-md-3" style="margin-left: 20px;">
+        <!-- <strong class="d-inline-block mb-2 text-success">NIFTY</strong> -->
+        <h3 class="mb-0" style="color: black;">Assumption</h3>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Entry
+          <span class="badge badge-primary badge-pill" style="font-size: large;" >{{as_entry}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Strike
+          {% if 'CE' in as_strike %}
+          <span class="badge badge-success badge-pill" style="font-size: large;">{{as_strike}}</span>
+            {% else %}
+          <span class="badge badge-danger badge-pill" style="font-size: large;">{{as_strike}}</span>
+            {% endif %}
+
+          <!-- <span class="badge badge-danger badge-pill" style="font-size: large;">{{as_strike}}</span> -->
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          High
+          <span class="badge badge-primary badge-pill" style="font-size: large;" >1</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Low
+          <span class="badge badge-primary badge-pill" style="font-size: large;">1</span>
+        </li>
+      </ul>
       </div>
+
+      
     </div>
 
       <div class="container">

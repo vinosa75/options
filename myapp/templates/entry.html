@@ -609,10 +609,10 @@ html {
     </style>
 
   </head>
-  <body style="background-color: black;">
+  <body style="background-color: #C9D1C8 ;">
 
-    <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand">Vinosa</a>
+    <nav class="navbar navbar-dark" style="background-color: #5B7065;">
+        <a class="navbar-brand">Nifty</a>
         <form class="form-inline">
           <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
           {% if user.is_authenticated %}
@@ -629,61 +629,98 @@ html {
 
     <section id ="container">
         <div class="panel panel-warning">
+          <div class="dropdown" style="text-align:center">
+            <!-- <h2> <span class="badge" style="color:white;background-color:#5B7065">Nifty</span> </h2> -->
 
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 card-margin">
+            {% comment %} <div class="zoom-in-out-box">Alerts</div> {% endcomment %}
+              <select id="from1dropdown" class="dropdown-select" style="margin-top: 0.5rem;margin-bottom: 0.5rem;">
+                <option value="select" aria-selected="true">Select</option>
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+              </select>
+          </div>
 
-                <form class="form-inline" method="POST" id="chartform" data-slots-url="{% url 'ajax_load' %}" >
-                    {% csrf_token %}
-
-                    <div class="form-group mx-sm-3 mb-2">
-                        <label for="High" style="color: white;">High: </label>
-                        <input type="text" class="form-control" id="High" placeholder="High" name="High" required>
-                    </div>
-
-                    <div class="form-group mx-sm-3 mb-2">
-                        <label for="Open" style="color: white;">Open: </label>
-                        <input type="text" class="form-control" id="Open" placeholder="Open" name="Open" required>
-                    </div>
-
-                    <div class="form-group mx-sm-3 mb-2">
-                        <label for="Low" style="color: white;">Low: </label>
-                        <input type="text" class="form-control" id="Low" placeholder="Low" name="Low" required>
-                    </div>
-
-                    <div class="form-group mx-sm-3 mb-2">
-                        <button type="submit" class="btn btn-primary mb-2">Calculate</button>
-                    </div>
-
-                    <div class="form-group mx-sm-3 mb-2">
-                        <button type="reset" class="btn bg-soft-warning mb-2">Clear</button>
-                    </div>
+          <div id="form1Content">
+          </div>
 
 
-                    </form>
-
-                </div>
-            </div>
-
-
-        <!-- <form method="POST" id="chartform" data-slots-url="{% url 'ajax_load' %}" >
-              {% csrf_token %}
-           <input type="text" placeholder="Extry Value" class="form-control" id="search" name="entry">
-           <input type="text" placeholder="Strike Price" class="form-control" id="search" name="strike">
-          <input class="submit" type="submit" value="submit">
-          <input class="clear"  type="reset"  value="Clear">
-        </form> -->
-
-
-        </div>
       </div>
         </section>
 
-    <div id="id_slot" class="slot">  </div>
+    <!-- <div id="id_slot" class="slot">  </div> -->
 
+    <div class="card card-body" style="min-height: 300px">
+
+      <div id="OptionChainSingleSymbol"></div>
+
+    </div>
 
         <script>
+
+            $(document).ready(function(){
+                $('#from1dropdown').on('change', function() {
+                  if ( this.value == 'monday' || this.value == 'tuesday' || this.value == 'wednesday' || this.value == 'thursday' ||this.value == 'friday')
+                  {
+                    $("#OptionChainSingleSymbol").hide();
+                  }
+                  else
+                  {
+                    $("#OptionChainSingleSymbol").show();
+                  }
+                });
+            });
+
+
+$('#from1dropdown').on('change', function() {
+        var url = '{% url "newForm" %}';
+        var e = document.getElementById("from1dropdown");
+        var mydata = e.value;
+        console.log(mydata); // it's only for test
+        // mydata.append('callPut', strUser);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data:{
+                  title:mydata,
+                  csrfmiddlewaretoken: '{{ csrf_token }}',
+                  form:"form1",
+                  // csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                  action: 'post'
+              },
+            success: function(response, textStatus, xhr) {
+                console.log(url);
+                // document.getElementById("form1").reset();
+                $("#form1Content").html(response);
+
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log("error");
+            }
+        });
+        return false;
+    });
+
+    var frm = $('#form1');
+          frm.submit(function () {
+            var url = $("#form1").attr("data-slots-url")
+              $.ajax({
+                  type: frm.attr('method'),
+                  // url: frm.attr('action'),
+                  url:url,
+                  data: frm.serialize(),
+                  success: function (response, textStatus, xhr) {
+                      $("#OptionChainSingleSymbol").html(response);
+                  },
+                  error: function(response, textStatus, xhr) {
+                      $("#message").html("Something went wrong!");
+                  }
+              });
+              return false;
+          });
+
 
 
     console.log(document.cookie);

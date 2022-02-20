@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 card-margin" style="margin-bottom: 0rem;">
+
+        <form class="form-inline" method="POST" id="chartform" data-slots-url="{% url 'ajax_load' %}" >
+            {% csrf_token %}
+
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="High" style="color: black;">High: </label>
+                <input type="text" class="form-control" id="High" placeholder="High" name="High" required>
+            </div>
+
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="Open" style="color: black;">Open: </label>
+                <input type="text" class="form-control" id="Open" placeholder="Open" name="Open" required>
+            </div>
+
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="Low" style="color: black;">Low: </label>
+                <input type="text" class="form-control" id="Low" placeholder="Low" name="Low" required>
+            </div>
+
+            <div class="form-group mx-sm-3 mb-2">
+                <button type="submit" class="btn btn-primary mb-2">Calculate</button>
+            </div>
+
+            <div class="form-group mx-sm-3 mb-2">
+                <button type="reset" class="btn bg-soft-warning mb-2">Clear</button>
+            </div>
+
+
+            </form>
+
+        </div>
+    </div>
+
+
+<!-- <form method="POST" id="chartform" data-slots-url="{% url 'ajax_load' %}" >
+      {% csrf_token %}
+   <input type="text" placeholder="Extry Value" class="form-control" id="search" name="entry">
+   <input type="text" placeholder="Strike Price" class="form-control" id="search" name="strike">
+  <input class="submit" type="submit" value="submit">
+  <input class="clear"  type="reset"  value="Clear">
+</form> -->
+
+
+</div>
+
+
+<script>
+    $("#chartform").submit(function() {
+var url = $("#chartform").attr("data-slots-url")
+var e = document.getElementById("from1dropdown");
+
+console.log(e);
+var section = e.value;
+var mydata = $("form#chartform").serialize() + "&section=" + section;
+console.log(section); // it's only for test
+// mydata.append('callPut', strUser);
+$.ajax({
+    type: "POST",
+    url: url,
+    data: mydata,
+    success: function(response, textStatus, xhr) {
+        console.log(url);
+        // document.getElementById("form1").reset();
+        $("#OptionChainSingleSymbol").show();
+        $("#OptionChainSingleSymbol").html(response);
+
+    },
+    error: function(xhr, textStatus, errorThrown) {
+        console.log("error");
+    }
+});
+return false;
+});
+
+</script>
